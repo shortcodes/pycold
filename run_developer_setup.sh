@@ -6,7 +6,7 @@ development mode.
 
 if [[ "$VIRTUAL_ENV" == "" ]]; then
     echo "WARNING: NOT INSIDE OF A Python VIRTUAL_ENV. This script may not run correctly"
-fi 
+fi
 
 apt_ensure(){
     __doc__="
@@ -16,13 +16,13 @@ apt_ensure(){
     if we already have all requested packages.
 
     Args:
-        *ARGS : one or more requested packages 
+        *ARGS : one or more requested packages
 
     Example:
-        apt_ensure git curl htop 
+        apt_ensure git curl htop
 
     Ignore:
-        REQUESTED_PKGS=(git curl htop) 
+        REQUESTED_PKGS=(git curl htop)
     "
     # Note the $@ is not actually an array, but we can convert it to one
     # https://linuxize.com/post/bash-functions/#passing-arguments-to-bash-functions
@@ -33,7 +33,7 @@ apt_ensure(){
     do
         #apt_ensure_single $EXE_NAME
         RESULT=$(dpkg -l "$PKG_NAME" | grep "^ii *$PKG_NAME")
-        if [ "$RESULT" == "" ]; then 
+        if [ "$RESULT" == "" ]; then
             echo "Do not have PKG_NAME='$PKG_NAME'"
             MISS_PKGS=(${MISS_PKGS[@]} "$PKG_NAME")
         else
@@ -50,7 +50,7 @@ apt_ensure(){
 }
 
 
-# If on debian/ubuntu ensure the dependencies are installed 
+# If on debian/ubuntu ensure the dependencies are installed
 if [[ "$(command -v apt)" != "" ]]; then
     apt_ensure build-essential zlib1g-dev libgsl-dev gfortran
 else
@@ -71,7 +71,7 @@ else
 fi
 
 # Compile and install PyCold in development mode.
-# pip install --verbose -e . 
+# pip install --verbose -e .
 pip install --no-build-isolation --verbose -e .
 
 # Quick tests that the install worked
