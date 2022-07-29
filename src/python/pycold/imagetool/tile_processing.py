@@ -312,7 +312,8 @@ def main(rank, n_cores, stack_path, result_path, yaml_path, method, seedmap_path
                                                   t_cg=threshold,
                                                   conse=config['conse'],
                                                   pos=config['n_cols'] * (original_row - 1) + original_col)
-                    except RuntimeError:
+                    except RuntimeError as e:
+                        raise e
                         print("S-CCD fails at original_row {}, original_col {} ({})".format(original_row, original_col,
                                                                                            datetime.now(tz)
                                                                                            .strftime(
