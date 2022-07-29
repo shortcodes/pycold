@@ -6,6 +6,8 @@
 # 2) is only called when rank == 1
 import yaml
 import os
+import sys
+import traceback
 from os.path import join
 import pandas as pd
 import datetime as dt
@@ -313,7 +315,10 @@ def main(rank, n_cores, stack_path, result_path, yaml_path, method, seedmap_path
                                                   conse=config['conse'],
                                                   pos=config['n_cols'] * (original_row - 1) + original_col)
                     except RuntimeError as e:
-                        raise e
+                        exc_type, exc_value, exc_traceback = sys.exc_info()
+                        traceback.print_tb(e.__traceback__, limit=100, file=sys.stdout)
+                        traceback.print_exception(exc_type, exc_value, exc_traceback, limit=200, file=sys.stdout)
+
                         print("S-CCD fails at original_row {}, original_col {} ({})".format(original_row, original_col,
                                                                                            datetime.now(tz)
                                                                                            .strftime(
